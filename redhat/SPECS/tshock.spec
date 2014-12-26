@@ -7,7 +7,7 @@
 %global tsapi_commit a44d46af2f7b54110707b6f09875fdcf32365544
 %global tshock_commit 1228acbbc864515497da7c12f88b3af0bf209420
 
-%global tshock_version 4.3201
+%global tshock_version 4.2301
 
 ##
 # Package doesn't contain any libc/unmanaged code so debuginfo searching
@@ -67,6 +67,8 @@ A server modification for Terraria that adds features everyone loves.
 %patch2 -p0
 %patch5 -p0
 
+%setup -b 2 -T -n TShock-redhat-v%{tshock_version}
+ 
 %pre
 
 /usr/bin/getent passwd %{user} || /usr/sbin/useradd -r -d %{_datadir}/terraria -s /sbin/nologin %{user} 
@@ -102,7 +104,10 @@ popd
 install -d -m755 %{install_dir} 
 install -d -m755 %{lib_dir}
 install -d -m755 %{buildroot}%{_sysconfdir}/tsapi
-install -d -m755 %{buildroot}%{_sysconfdir}/tsapi/instances.d
+
+mkdir -p %{buildroot}%{_sysconfdir}/systemd/user
+
+install -m755 redhat/SOURCES/tsapi.service %{buildroot}%{_sysconfdir}/systemd/user
 
 pushd ../build
 
@@ -120,9 +125,6 @@ install -m755 Mono.Data.Sqlite.dll %{lib_dir}/Mono.Data.Sqlite.dll
 install -m755 Mono.Data.Sqlite.dll.so %{lib_dir}/Mono.Data.Sqlite.dll.so
 
 install -m755 MySql.Data.dll %{lib_dir}/MySql.Data.dll
-
-mkdir -p %{buildroot}%{_sysconfdir}/systemd/user
-
 
 
 # Symlink section
@@ -145,7 +147,6 @@ popd
 %attr(775,%{user},%{group}) %{_datarootdir}/terraria
 %attr(755,%{user},%{group}) %{_datarootdir}/terraria/TerrariaServer
 %attr(775,%{user},%{group}) %{_sysconfdir}/tsapi
-%attr(775,%{user},%{group}) %{_sysconfdir}/tsapi/instances.d
 
 %attr(775,%{user},%{group}) %config %{_sysconfdir}/tsapi/instances.conf
 

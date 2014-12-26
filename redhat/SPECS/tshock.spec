@@ -31,6 +31,7 @@ URL:            http://tshock.co/xf
 
 Source0:        https://github.com/%{tshock_group}/%{tshock_proj}/archive/%{tshock_commit}/%{tshock_proj}-%{tshock_commit}.tar.gz
 Source1:	https://github.com/%{tsapi_group}/%{tsapi_proj}/archive/%{tsapi_commit}/%{tsapi_proj}-%{tsapi_commit}.tar.gz
+Source2:	https://github.com/tylerjwatson/%{tshock_proj}/archive/redhat-v%{tshock_version}.tar.gz	
 
 ##
 # Fixes CS1065 errors on TSAPI
@@ -123,29 +124,6 @@ install -m755 MySql.Data.dll %{lib_dir}/MySql.Data.dll
 mkdir -p %{buildroot}%{_sysconfdir}/systemd/user
 
 
-echo <<EOF >%{buildroot}%{_sysconfdir}/tsapi/instances.conf
-# Sample instances file
-
-[DEFAULT]
-port = 7777
-
-EOF
-
-echo <<EOF >%{buildroot}%{_sysconfdir}/systemd/user/tsapi.service
-[Unit]
-Description=TSAPI Terraria Server
-After=network.target
-Requires=network.target
-
-
-[Service]
-ExecStart=%{_bindir}/tsapi start %i
-
-
-[Install]
-WantedBy=multi-user.target
-
-EOF
 
 # Symlink section
 mkdir ${RPM_BUILD_ROOT}/%{_bindir}

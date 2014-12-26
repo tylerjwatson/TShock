@@ -35,21 +35,21 @@ Source1:	https://github.com/%{tsapi_group}/%{tsapi_proj}/archive/%{tsapi_commit}
 ##
 # Fixes CS1065 errors on TSAPI
 ##
-Patch1:				0001-fix-cs1065.patch
-Patch2:				0002-TSAPI-reference.patch	
-Patch4:				0004-tsapi-solution-output.patch
-Patch5:				0005-disable-test-solution.patch
+Patch1:		0001-fix-cs1065.patch
+Patch2:		0002-TSAPI-reference.patch	
+Patch4:		0004-tsapi-solution-output.patch
+Patch5:		0005-disable-test-solution.patch
 
-BuildRequires:  	gcc
-BuildRequires:		libmono-2_0-devel >= 3.10
-BuildRequires:		mono-devel >= 3.10
-AutoReqProv:	 	no
+BuildRequires:  gcc
+BuildRequires:	libmono-2_0-devel >= 3.10
+BuildRequires:	mono-devel >= 3.10
+AutoReqProv:	no
 
-Requires:			mono-complete >= 3.10      
+Requires:		mono-complete >= 3.10      
 Requires(pre): 		/usr/sbin/useradd, /usr/bin/getent
 Requires(postun): 	/usr/sbin/userdel
 
-Provides:			tshock
+Provides:	tshock
 
 %description
 

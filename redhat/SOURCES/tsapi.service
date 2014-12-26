@@ -1,0 +1,16 @@
+# systemd unit file for terrariaserverapi
+# Tyler W.  <tyler@tw.id.au>
+
+[Unit]
+Description=TSAPI Terraria Server
+After=network.target
+Requires=network.target
+
+
+[Service]
+ExecStart=%{_bindir}/tsapi start %i
+
+
+[Install]
+WantedBy=multi-user.target
+

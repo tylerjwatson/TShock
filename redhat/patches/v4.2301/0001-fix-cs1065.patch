@@ -1,0 +1,29 @@
+--- Terraria/Collision.cs	2014-09-03 17:17:30.000000000 +1000
++++ Terraria/Collision.cs	2014-12-24 05:41:26.965624885 +1000
+@@ -227,7 +227,7 @@
+ 			int num15 = Math.Sign(num4 - num2);
+ 			bool flag = false;
+ 			bool flag2 = false;
+-			bool result;
++			bool result = false;
+ 			try
+ 			{
+ 				while (true)
+@@ -449,7 +449,7 @@
+ 			int num15 = Math.Sign(num4 - num2);
+ 			bool flag = false;
+ 			bool flag2 = false;
+-			Tuple<int, int> result;
++			Tuple<int, int> result = default(Tuple<int, int>);
+ 			try
+ 			{
+ 				while (true)
+@@ -691,7 +691,7 @@
+ 			int num15 = Math.Sign(num4 - num2);
+ 			bool flag = false;
+ 			bool flag2 = false;
+-			Tuple<int, int> result;
++			Tuple<int, int> result = default(Tuple<int, int>);
+ 			try
+ 			{
+ 				while (true)

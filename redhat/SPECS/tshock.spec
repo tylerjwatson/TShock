@@ -47,6 +47,10 @@ BuildRequires:	mono-devel >= 3.10
 AutoReqProv:	no
 
 Requires:		mono-complete >= 3.10      
+Requires:		python >= 2.7.5
+Requires:		python-docopt
+Requires:		python-pip
+
 Requires(pre): 		/usr/sbin/useradd, /usr/bin/getent
 Requires(postun): 	/usr/sbin/userdel
 
@@ -104,14 +108,19 @@ popd
 install -d -m755 %{install_dir} 
 install -d -m755 %{lib_dir}
 install -d -m755 %{buildroot}%{_sysconfdir}/tsapi
+install -d -m755 %{buildroot}%{_sysconfdir}/tsapi/tshock
+install -d -m755 %{buildroot}%{_sysconfdir}/tsapi/instances.d/
 
 mkdir -p %{buildroot}%{_sysconfdir}/systemd/user
 
 install -m755 redhat/SOURCES/tsapi.service %{buildroot}%{_sysconfdir}/systemd/user
+install -m755 redhat/SOURCES/instances.conf %{buildroot}%{_sysconfdir}/tsapi/instances.conf
 
 pushd ../build
 
 install -m755 TerrariaServer %{install_dir}/TerrariaServer
+install -m755 tsinstance.py %{install_dir}/tsinstance
+
 install -m755 TShockAPI.dll %{lib_dir}/TShockAPI.dll 
 install -m755 TShockAPI.dll.so %{lib_dir}/TShockAPI.dll.so 
 
@@ -134,8 +143,7 @@ mkdir ${RPM_BUILD_ROOT}/%{_bindir}
 # I'm pretty sure this is the dirtiest shit ever, fix this if it
 # becomes a problem.
 ##
-ln -sf ../../%{_datadir}/terraria/TerrariaServer ${RPM_BUILD_ROOT}/%{_bindir}/TerrariaServer
-ln -sf ../../../tsapi %{install_dir}/serverplugins 
+ln -sf %{_datadir}/terraria/TerrariaServer ${RPM_BUILD_ROOT}/%{_bindir}/TerrariaServer
 
 popd
 # rm -rf $RPM_BUILD_ROOT
@@ -147,8 +155,8 @@ popd
 %attr(775,%{user},%{group}) %{_datarootdir}/terraria
 %attr(755,%{user},%{group}) %{_datarootdir}/terraria/TerrariaServer
 %attr(775,%{user},%{group}) %{_sysconfdir}/tsapi
-
 %attr(775,%{user},%{group}) %config %{_sysconfdir}/tsapi/instances.conf
+%attr(775,%{user},%{group}) %config %{_sysconfdir}/tsapi/instances.d
 
 %{_sysconfdir}/systemd/user/tsapi.service
 

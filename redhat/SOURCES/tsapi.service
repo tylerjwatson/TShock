@@ -8,8 +8,10 @@ Requires=network.target
 
 
 [Service]
-ExecStart=%{_bindir}/tsapi start %i
-
+ExecStart=/usr/share/terraria/tsinstance start %i
+WorkingDirectory=/usr/share/terraria
+User=tsapi
+Group=tsapi
 
 [Install]
 WantedBy=multi-user.target
